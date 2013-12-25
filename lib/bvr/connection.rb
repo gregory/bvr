@@ -20,6 +20,7 @@ module Bvr
     def self.get(params)
       #TODO: prase body for 500
       self.connection.get(self.uri(params)).body
+      self.connection.get(self.uri(params))
     end
 
     def self.uri(queryH)
