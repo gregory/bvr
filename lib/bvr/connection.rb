@@ -3,7 +3,8 @@ require 'rack'
 
 module Bvr
   class Connection
-    BASE_URI = 'https://www.voipinfocenter.com/API/Request.ashx'
+    BASE_URI = 'https://www.voipinfocenter.com'
+    API_PATH = '/API/Request.ashx?'
 
     def self.base_uri
       BASE_URI
@@ -16,13 +17,18 @@ module Bvr
       end
     end
 
-    def self.query(queryH)
+    def self.get(params)
+      #TODO: prase body for 500
+      self.connection.get(self.uri(params)).body
+    end
+
+    def self.uri(queryH)
       params = {
         username: Bvr.config.username,
         password: Bvr.config.password
       }
       queryH.merge! params
-      ::Rack::Utils.build_query queryH
+      "#{API_PATH}#{::Rack::Utils.build_query queryH}"
     end
   end
 end
