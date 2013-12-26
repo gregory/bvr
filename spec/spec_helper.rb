@@ -6,7 +6,6 @@ require_relative '../lib/bvr'
 
 require 'minitest/autorun'
 require 'minitest/pride'
-require 'minitest/stub_const'
 
 Turn.config do |c|
   c.format  = :outline

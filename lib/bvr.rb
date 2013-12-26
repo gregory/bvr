@@ -4,13 +4,13 @@ Dir[File.dirname(__FILE__) + '/bvr/*.rb'].each{ |file| require file }
 module Bvr
   extend self
 
-  attr_accessor :config
+  attr_accessor :config, :connection
 
   def configure
-    self.config = Bvr::Configuration.new.tap{ |configuration| yield(configuration) }
+    @config = Bvr::Configuration.new.tap{ |configuration| yield(configuration) }
   end
 
   def connection
-    self.connection = Bvr::Connection.new
+    @connection ||= Bvr::Connection.new
   end
 end

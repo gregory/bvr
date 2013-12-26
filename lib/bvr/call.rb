@@ -10,5 +10,9 @@ module Bvr
     attribute :dest, Phone, tag: 'Destination', parser: :phone_number_parser
     attribute :duration, String, tag: 'Duration'
     attribute :charge, String, tag: 'Charge' #? currency
+
+    def relative_duration
+      Time.parse(self.duration, start_time)
+    end
   end
 end

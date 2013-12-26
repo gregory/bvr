@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!DOCTYPE CallOverview>
+<CallOverview>
+  <Calls Count="10">
+    <Call CallType="PSTNOutSip" Customer="this account" StartTime="2013-12-24 18:05:26  (UTC)" Destination="+32123456788" Duration="00:02:21" Charge="0.0705" CallId="1234567890" />
+    <Call CallType="PSTNOutSip" Customer="this account" StartTime="2013-12-24 18:05:14  (UTC)" Destination="+49123456789" Duration="00:02:41" Charge="0.10734" CallId="1234567891" />
+    <Call CallType="PSTNOutSip" Customer="this account" StartTime="2013-12-01 23:02:38  (UTC)" Destination="+49123456790" Duration="00:00:20" Charge="0.01334" CallId="1234567892" />
+    <Call CallType="PSTNOutSip" Customer="this account" StartTime="2013-12-01 22:59:01  (UTC)" Destination="+49123456791" Duration="00:00:15" Charge="0.01" CallId="1234567893" />
+    <Call CallType="PSTNOutSip" Customer="this account" StartTime="2013-10-29 11:30:18  (UTC)" Destination="+49123456792" Duration="00:00:15" Charge="0.01" CallId="1234567894" />
+  </Calls>
+  <MoreData>False</MoreData>
+</CallOverview>

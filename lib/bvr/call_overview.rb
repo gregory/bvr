@@ -30,10 +30,14 @@ module Bvr
       }
 
       options.merge! params
-      self.parse(Bvr.connection.get(options)).first #only one <Calls> tag
+      self.parse(self.result(options)).first #only one <Calls> tag
     end
 
   private
+
+    def self.result(options)
+      Bvr.connection.get(options)
+    end
 
     def self.valid_options?(options)
       options.empty? ? true : options.keys.all? { |option| VALID_OPTIONS.include? option}
