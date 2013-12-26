@@ -21,7 +21,7 @@ describe Bvr::Connection do
   end
 
 
-  describe '.get(params)' do
+  describe 'get(params)' do
     let(:params) { {foo: 'bar'} }
     let(:faraday_connection) { Minitest::Mock.new }
     let(:username) { 'username' }
@@ -52,7 +52,7 @@ describe Bvr::Connection do
 
   end
 
-  describe '.uri(queryH)' do
+  describe 'uri(queryH)' do
     let(:queryH) { { foo: 'bar', bar: 'foo'} }
     let(:username) { 'username' }
     let(:faraday_connection) { Minitest::Mock.new }

@@ -19,7 +19,6 @@ module Bvr
       BASE_URI
     end
 
-
     def get(params)
       #TODO: prase body for 500
       self.faraday_connection.get(uri(params)).body
