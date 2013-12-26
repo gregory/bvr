@@ -1,8 +1,18 @@
 require_relative '../../spec_helper'
 
 describe Bvr::Connection do
-  describe '.base_uri' do
-    subject{ Bvr::Connection.base_uri }
+  describe '.new(faraday_adapter)' do
+    let(:default_faraday_adapter) { Faraday::Adapter::NetHttp }
+    subject{ Bvr::Connection.new }
+
+    it 'returns a Faraday::Connection with the nethttp adapter' do
+      subject.faraday_connection.must_be_instance_of Faraday::Connection
+      subject.faraday_connection.builder.handlers.must_include default_faraday_adapter
+    end
+  end
+
+  describe 'base_uri' do
+    subject{ Bvr::Connection.new.base_uri }
     let(:base_uri) { 'https://www.voipinfocenter.com' }
 
     it "returns the base_uri of the api" do
@@ -10,21 +20,17 @@ describe Bvr::Connection do
     end
   end
 
-  describe '.connection(faraday_adapter)' do
-    let(:default_faraday_adapter) { Faraday::Adapter::NetHttp }
-    subject{ Bvr::Connection.connection}
-
-    it 'returns a Faraday::Connection with the nethttp adapter' do
-      subject.must_be_instance_of Faraday::Connection
-      subject.builder.handlers.must_include default_faraday_adapter
-    end
-  end
 
   describe '.get(params)' do
     let(:params) { {foo: 'bar'} }
-    let(:connection) { Minitest::Mock.new }
+    let(:faraday_connection) { Minitest::Mock.new }
     let(:username) { 'username' }
     let(:password) { 'password' }
+    let(:connection) do
+      Bvr::Connection.new.tap do |connection|
+        connection.faraday_connection = faraday_connection
+      end
+    end
 
     before do
       Bvr.configure do |config|
@@ -33,17 +39,15 @@ describe Bvr::Connection do
       end
     end
 
-    subject{ Bvr::Connection.get(params) }
+    subject { connection.get(params) }
 
     it 'calls connection.get with the right uri' do
-      Bvr::Connection.stub(:connection, connection) do
         response =  Minitest::Mock.new
-        connection.expect :get, response, [Bvr::Connection.uri(params)]
+        faraday_connection.expect :get, response, [connection.uri(params)]
         response.expect :body, nil
         subject
-        connection.verify
+        faraday_connection.verify
         response.verify
-      end
     end
 
   end
@@ -51,7 +55,13 @@ describe Bvr::Connection do
   describe '.uri(queryH)' do
     let(:queryH) { { foo: 'bar', bar: 'foo'} }
     let(:username) { 'username' }
+    let(:faraday_connection) { Minitest::Mock.new }
     let(:password) { 'password' }
+    let(:connection) do
+      Bvr::Connection.new.tap do |connection|
+        connection.faraday_connection = faraday_connection
+      end
+    end
 
     before do
       Bvr.configure do |config|
@@ -60,7 +70,7 @@ describe Bvr::Connection do
       end
     end
 
-    subject{ Bvr::Connection.uri(queryH) }
+    subject { connection.uri(queryH) }
 
     it 'match the api path' do
       subject.must_match Regexp.new(Bvr::Connection::API_PATH)
