@@ -22,7 +22,7 @@ module Bvr
 
     def get(params)
       body = self.faraday_connection.get(self.class.uri_from_h(params)).body
-      ::XmlSimple.xml_in body
+      ::XmlSimple.xml_in body, {ForceArray: false}
     end
 
     def self.uri_from_h(queryH)

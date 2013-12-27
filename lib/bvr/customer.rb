@@ -19,10 +19,10 @@ module Bvr
 
     def self.new_from_response(h)
       self.new.tap do |customer|
-        customer.id      = h["Customer"][0]
-        customer.email   = h["EmailAddress"][0]
-        customer.raw_blocked = h["Blocked"][0]
-        customer.credit  = Bvr::Credit.new(h["SpecificBalance"][0], h["Balance"][0])
+        customer.id      = h["Customer"]
+        customer.email   = h["EmailAddress"]
+        customer.raw_blocked = h["Blocked"]
+        customer.credit  = Bvr::Credit.new(h["SpecificBalance"], h["Balance"])
       end
     end
 

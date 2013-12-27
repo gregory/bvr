@@ -37,9 +37,9 @@ module Bvr
 
     def self.new_from_response(h)
       self.new.tap do |calls_collection|
-        calls_collection.raw_more_data  = h['MoreData'][0]
-        calls_collection.raw_count = h['Calls'][0]['Count']
-        calls_collection.collection = h['Calls'][0]['Call'].each_with_object([]) do |callH, array|
+        calls_collection.raw_more_data  = h['MoreData']
+        calls_collection.raw_count = h['Calls']['Count']
+        calls_collection.collection = h['Calls']['Call'].each_with_object([]) do |callH, array|
           array << Call.new_from_response(callH)
         end
       end

@@ -37,7 +37,7 @@ describe Bvr::Customer do
 
   describe '.new_from_response(h)' do
     let(:h) do
-      ::XmlSimple.xml_in File.read(File.join(File.dirname(__FILE__), '/..', '/..', '/fixtures/getuserinfo.xml'))
+      ::XmlSimple.xml_in File.read(File.join(File.dirname(__FILE__), '/..', '/..', '/fixtures/getuserinfo.xml')), {ForceArray: false}
     end
 
     subject { Bvr::Customer.new_from_response(h) }
@@ -75,7 +75,7 @@ describe Bvr::Customer do
   describe '#calls(options={})' do
     include FaradayStub
     let(:h) do
-      ::XmlSimple.xml_in File.read(File.join(File.dirname(__FILE__), '/..', '/..', '/fixtures/getuserinfo.xml'))
+      ::XmlSimple.xml_in File.read(File.join(File.dirname(__FILE__), '/..', '/..', '/fixtures/getuserinfo.xml')), {ForceArray: false}
     end
     let(:calls_response) do
       File.read(File.join(File.dirname(__FILE__), '/..', '/..', '/fixtures/calloverview.xml'))
