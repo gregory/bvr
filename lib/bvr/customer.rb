@@ -32,9 +32,7 @@ module Bvr
 
     def calls(options={})
       return @_calls if @_calls && @_calls.query_params == options
-      @_calls = Bvr::CallCollection.find_by_customer_id(self.id)
+      @_calls = Bvr::CallCollection.find_by_customer_id(self.id, options)
     end
-
-
   end
 end

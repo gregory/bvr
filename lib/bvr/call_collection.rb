@@ -15,22 +15,24 @@ module Bvr
       find_by_customer_id: 'calloverview'
     }
 
-    attr_reader :query_params
-    attr_accessor :raw_count, :raw_more_data, :collection
+    attr_accessor :query_params, :raw_count, :raw_more_data, :collection
 
     def self.find_by_customer_id(customer_id, options={})
       raise ArgumentError.new('Unknown Argument') unless self.valid_options?(options)
 
-      @query_params = options
 
       params = {
         command: API_COMMANDS[:find_by_customer_id],
         customer: customer_id
       }
 
-      response = Bvr.connection.get(@query_params.merge(params))
+      response = Bvr.connection.get(params.merge(options))
 
-      response['Calls'].nil? ? nil : self.new_from_response(response)
+      unless response['Calls'].nil?
+        self.new_from_response(response).tap do |call_collection|
+          call_collection.query_params = options
+        end
+      end
     end
 
     def self.new_from_response(h)
