@@ -69,25 +69,32 @@ describe Bvr::CallCollection do
         subject.collection.must_be_instance_of Array
         subject.collection.size.must_equal 5
       end
+    end
+  end
 
-      #it 'parse the response to objects' do
-          #subject.must_be_instance_of Bvr::CallOverview
-          #subject.calls.size.must_equal 5
-          #subject.count.must_equal 10
+  describe '#count' do
+    let(:raw_count) { '20' }
+    let(:call_collection) {Bvr::CallCollection.new}
 
-          #subject.calls[0].tap do |call|
-            #start_time = Time.parse("2013-12-24 18:05:26  (UTC)")
-            #call.id.must_equal "1234567890"
-            #call.calltype.must_equal "PSTNOutSip"
-            #call.start_time.must_equal start_time
-            #call.dest.must_be_instance_of Bvr::Phone
-            #call.dest.number.must_equal "+32123456788"
-            #call.duration.must_equal "00:02:21"
-            #call.relative_duration.must_equal Time.parse("00:02:21", start_time)
-            #call.charge.must_equal "0.0705"
-          #end
-        #end
-      #end
+    subject { call_collection.count }
+
+    it 'returns the number of counts' do
+      call_collection.stub(:raw_count, raw_count) do
+        subject.must_equal Integer(raw_count)
+      end
+    end
+  end
+
+  describe '#next?' do
+    let(:raw_more_data) { 'True' }
+    let(:call_collection) {Bvr::CallCollection.new}
+
+    subject { call_collection.next? }
+
+    it 'says if there is more data' do
+      call_collection.stub(:raw_more_data, raw_more_data) do
+        subject.must_equal true
+      end
     end
   end
 end
