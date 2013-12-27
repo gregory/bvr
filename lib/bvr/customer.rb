@@ -29,5 +29,12 @@ module Bvr
     def blocked?
       self.raw_blocked == "True"
     end
+
+    def calls(options={})
+      return @_calls if @_calls && @_calls.query_params == options
+      @_calls = Bvr::CallCollection.find_by_customer_id(self.id)
+    end
+
+
   end
 end
