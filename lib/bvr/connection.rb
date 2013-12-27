@@ -1,5 +1,6 @@
 require 'faraday'
 require 'rack'
+require 'xmlsimple'
 
 module Bvr
   class Connection
@@ -20,11 +21,11 @@ module Bvr
     end
 
     def get(params)
-      #TODO: prase body for 500
-      self.faraday_connection.get(uri(params)).body
+      body = self.faraday_connection.get(self.class.uri_from_h(params)).body
+      ::XmlSimple.xml_in body
     end
 
-    def uri(queryH)
+    def self.uri_from_h(queryH)
       params = {
         username: Bvr.config.username,
         password: Bvr.config.password
