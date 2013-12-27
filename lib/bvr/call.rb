@@ -1,18 +1,12 @@
-require_relative 'phone'
 module Bvr
   class Call
-    include HappyMapper
+    API_COMMANDS= {
+      find
+    }
+    attr_accessor :id, :calltype, :start_time, :dest, :duration, :charge
 
-    tag 'Call'
-    attribute :id, String, tag: 'CallId'
-    attribute :calltype, String, tag: 'CallType'
-    attribute :start_time, Time, tag: 'StartTime'
-    attribute :dest, Phone, tag: 'Destination', parser: :phone_number_parser
-    attribute :duration, String, tag: 'Duration'
-    attribute :charge, String, tag: 'Charge' #? currency
-
-    def relative_duration
-      Time.parse(self.duration, start_time)
+    def duration
+      Time.parse(self.raw_duration, start_time)
     end
   end
 end

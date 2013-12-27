@@ -1,14 +1,14 @@
 module Bvr
   class Customer
     API_COMMANDS = {
-      find_by_id: "getuserinfo"
+      find: "getuserinfo"
     }
 
     attr_accessor :id, :email, :raw_blocked, :credit
 
     def self.find(id)
       params = {
-        command: API_COMMANDS[:find_by_id],
+        command: API_COMMANDS[:find],
         customer: id
       }
 
