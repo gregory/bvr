@@ -28,10 +28,10 @@ module Bvr
 
       response = Bvr.connection.get(params.merge(options))
 
-      unless response['Calls'].nil?
-        self.new_from_response(response).tap do |call_collection|
-          call_collection.query_params = options
-        end
+      return [] if response['Calls'].nil?
+
+      self.new_from_response(response).tap do |call_collection|
+        call_collection.query_params = options
       end
     end
 

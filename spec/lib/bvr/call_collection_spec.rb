@@ -70,6 +70,24 @@ describe Bvr::CallCollection do
         subject.collection.size.must_equal 5
       end
     end
+
+    describe 'when there is not response' do
+      let(:connection) { Minitest::Mock.new }
+      let(:customer_id) { 'foo' }
+      let(:params) { { command: Bvr::CallCollection::API_COMMANDS[:find_by_customer_id], customer: customer_id } }
+
+      subject { Bvr::CallCollection.find_by_customer_id(customer_id) }
+
+      before do
+        Bvr.connection = connection
+      end
+
+      it 'returns empty array' do
+        connection.expect(:get, {}, [params])
+        subject.must_equal []
+        connection.verify
+      end
+    end
   end
 
   describe '#count' do
