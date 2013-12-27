@@ -19,4 +19,24 @@ describe Bvr do
       subject.config.password.must_equal password
     end
   end
+
+  describe '.connection' do
+    subject { Bvr.connection }
+
+    describe 'when @config is nil' do
+      before { Bvr.config = nil }
+
+      it 'raise an exception if @config is nil' do
+        proc { subject }.must_raise Exception
+      end
+    end
+
+    describe 'when @config is set' do
+      before { Bvr.config = 'foo' }
+
+      it 'returns a Bvr::Connection' do
+        subject.must_be_instance_of Bvr::Connection
+      end
+    end
+  end
 end

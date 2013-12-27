@@ -11,6 +11,8 @@ module Bvr
   end
 
   def connection
+    raise ::Exception.new("Please provide username and password") if @config.nil?
+
     @connection ||= Bvr::Connection.new
   end
 end
