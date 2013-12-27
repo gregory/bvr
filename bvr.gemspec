@@ -6,11 +6,11 @@ require 'bvr/version'
 Gem::Specification.new do |spec|
   spec.name          = "bvr"
   spec.version       = Bvr::VERSION
-  spec.authors       = ["gregory"]
+  spec.authors       = ["Gregory Horion"]
   spec.email         = ["greg2502@gmail.com"]
   spec.description   = %q{A ruby interface to Bestvoipreselling API}
   spec.summary       = spec.description
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/gregory/bvr"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
