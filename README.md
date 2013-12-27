@@ -1,6 +1,6 @@
 # Bvr
 
-TODO: Write a gem description
+The BestVoipReselling Ruby Gem
 
 ## Installation
 
@@ -18,7 +18,17 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+### Configuration
+`
+Bvr.configure do |config|
+  config.username, config.password = ['username', 'password']
+end
+`
+### Retreiving Call Overview
+`
+Bvr::CallOverview.find('a customer id')
+`
+
 
 ## Contributing
 
