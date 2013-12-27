@@ -1,4 +1,5 @@
 require_relative '../../spec_helper'
+require_relative "../../helpers/faraday_stub"
 
 describe Bvr::Connection do
   describe '.new(faraday_adapter)' do
@@ -32,36 +33,22 @@ describe Bvr::Connection do
       end
     end
 
-    before do
-      Bvr.configure do |config|
-        config.username = username
-        config.password = password
-      end
-    end
-
     subject { connection.get(params) }
 
     it 'calls connection.get with the right uri' do
         response =  Minitest::Mock.new
-        faraday_connection.expect :get, response, [connection.uri(params)]
-        response.expect :body, nil
+        faraday_connection.expect :get, response, [Bvr::Connection.uri_from_h(params)]
+        response.expect :body, ::XmlSimple.xml_out({})
         subject
         faraday_connection.verify
         response.verify
     end
-
   end
 
-  describe 'uri(queryH)' do
+  describe 'self.uri_from_h(queryH)' do
     let(:queryH) { { foo: 'bar', bar: 'foo'} }
     let(:username) { 'username' }
-    let(:faraday_connection) { Minitest::Mock.new }
     let(:password) { 'password' }
-    let(:connection) do
-      Bvr::Connection.new.tap do |connection|
-        connection.faraday_connection = faraday_connection
-      end
-    end
 
     before do
       Bvr.configure do |config|
@@ -70,7 +57,7 @@ describe Bvr::Connection do
       end
     end
 
-    subject { connection.uri(queryH) }
+    subject { Bvr::Connection.uri_from_h(queryH) }
 
     it 'match the api path' do
       subject.must_match Regexp.new(Bvr::Connection::API_PATH)
