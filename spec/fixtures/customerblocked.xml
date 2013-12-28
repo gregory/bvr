@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<!DOCTYPE ChangeUserInfo>
+<ChangeUserInfo>
+  <Customer>foo*voxiness</Customer>
+  <Result>Success</Result>
+  <Reason>CustomerBlocked Changed</Reason>
+  <Result>Success</Result>
+  <Reason>Request completely succeeded</Reason>
+</ChangeUserInfo>

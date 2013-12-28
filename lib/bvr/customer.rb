@@ -2,7 +2,8 @@ module Bvr
   class Customer
     API_COMMANDS = {
       find: "getuserinfo",
-      create: "createcustomer"
+      create: "createcustomer",
+      block: "changeuserinfo"
     }
 
     CREATE_OPTIONS = {
@@ -20,6 +21,18 @@ module Bvr
     }
 
     attr_accessor :id, :email, :raw_blocked, :credit
+
+    def self.block(id, block=true)
+      params = {
+        command: API_COMMANDS[:changeuserinfo],
+        customer: id,
+        customerblocked: block
+      }
+
+      raise ArgumentError.new('Please provide a boolean') unless !!block == block
+
+      Bvr.connection.get(params)
+    end
 
     def self.create(options)
       params = { command: API_COMMANDS[:create] }

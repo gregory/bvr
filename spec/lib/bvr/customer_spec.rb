@@ -2,6 +2,43 @@ require_relative "../../spec_helper"
 require_relative "../../helpers/faraday_stub"
 
 describe Bvr::Customer do
+  describe '.block(id, block=true)' do
+    include FaradayStub
+
+    let(:customer_id) { 'foo' }
+    let(:block) { true }
+    let(:options) do
+      {
+        command: Bvr::Customer::API_COMMANDS[:changeuserinfo],
+        customer: customer_id,
+        customerblocked: block
+      }
+    end
+    let(:response) do
+      File.read(File.join(File.dirname(__FILE__), '/..', '/..', '/fixtures/customerblocked.xml'))
+    end
+
+    subject{ Bvr::Customer.block(customer_id, block) }
+
+    before do
+      faraday_adapter.get(Bvr::Connection.uri_from_h(options)) { [200, {}, response] }
+    end
+
+    it 'return a response' do
+      subject['Result'][0].must_be_instance_of String
+    end
+
+    describe 'when block is not a boolean' do
+      let(:block) { 'foo' }
+
+      subject{ Bvr::Customer.block(customer_id, block) }
+
+      it 'raise an ArgumentError' do
+        proc { subject }.must_raise ArgumentError
+      end
+    end
+  end
+
   describe '.create(options)' do
     include FaradayStub
 
@@ -18,6 +55,14 @@ describe Bvr::Customer do
 
     it 'returns the response' do
       subject['Result'].must_be_instance_of String
+    end
+
+    describe 'when options are invalid' do
+      let(:options) { { foo: 'bar' } }
+
+      it 'raise an ArgumentError' do
+        proc { subject }.must_raise ArgumentError
+      end
     end
   end
 
