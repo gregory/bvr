@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE ChangeUserInfo>
 <ChangeUserInfo>
-  <Customer>foo*voxiness</Customer>
+  <Customer>foo*provider</Customer>
   <Result>Success</Result>
   <Reason>CustomerBlocked Changed</Reason>
   <Result>Success</Result>

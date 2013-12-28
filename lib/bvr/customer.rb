@@ -6,6 +6,11 @@ module Bvr
       block: "changeuserinfo"
     }
 
+    BLOCKED_VALUES = {
+      true => 'True',
+      false => 'False'
+    }
+
     CREATE_OPTIONS = {
       mendatory: [
         :username,
@@ -64,7 +69,27 @@ module Bvr
     end
 
     def blocked?
-      self.raw_blocked == "True"
+      self.raw_blocked == BLOCKED_VALUES[true]
+    end
+
+    def block!
+      response = Bvr::Customer.block(self.id, true)
+
+      if response['Result'][0] == 'Success'
+        self.raw_blocked = BLOCKED_VALUES[true]
+      end
+
+      return response['Result'][0] == 'Success'
+    end
+
+    def unblock!
+      response = Bvr::Customer.block(self.id, false)
+
+      if response['Result'][0] == 'Success'
+        self.raw_blocked = BLOCKED_VALUES[false]
+      end
+
+      return response['Result'][0] == 'Success'
     end
 
     def calls(options={})

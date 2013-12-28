@@ -26,6 +26,7 @@ describe Bvr::Customer do
 
     it 'return a response' do
       subject['Result'][0].must_be_instance_of String
+      subject['Customer'].must_equal "#{customer_id}*provider"
     end
 
     describe 'when block is not a boolean' do
@@ -136,8 +137,71 @@ describe Bvr::Customer do
     end
   end
 
+  describe '#block!' do
+    include FaradayStub
+
+    let(:customer_id) { 'foo' }
+    let(:raw_blocked) { 'bar' }
+    let(:customer) { Bvr::Customer.new.tap{ |c| c.id = customer_id; c.raw_blocked = raw_blocked } }
+    let(:block) { true }
+    let(:options) do
+      {
+        command: Bvr::Customer::API_COMMANDS[:changeuserinfo],
+        customer: customer_id,
+        customerblocked: block
+      }
+    end
+    let(:response) do
+      File.read(File.join(File.dirname(__FILE__), '/..', '/..', '/fixtures/customerblocked.xml'))
+    end
+
+    before do
+      faraday_adapter.get(Bvr::Connection.uri_from_h(options)) { [200, {}, response] }
+    end
+
+    subject { customer.block! }
+
+    it 'updates the attribute of the customer' do
+      customer.raw_blocked.must_equal raw_blocked
+      subject
+      customer.raw_blocked.must_equal Bvr::Customer::BLOCKED_VALUES[true]
+    end
+  end
+
+  describe '#unblock!' do
+    include FaradayStub
+
+    let(:customer_id) { 'foo' }
+    let(:raw_blocked) { 'bar' }
+    let(:customer) { Bvr::Customer.new.tap{ |c| c.id = customer_id; c.raw_blocked = raw_blocked } }
+    let(:block) { false }
+    let(:options) do
+      {
+        command: Bvr::Customer::API_COMMANDS[:changeuserinfo],
+        customer: customer_id,
+        customerblocked: block
+      }
+    end
+    let(:response) do
+      File.read(File.join(File.dirname(__FILE__), '/..', '/..', '/fixtures/customerblocked.xml'))
+    end
+
+    before do
+      faraday_adapter.get(Bvr::Connection.uri_from_h(options)) { [200, {}, response] }
+    end
+
+    subject { customer.unblock! }
+
+    it 'updates the attribute of the customer' do
+      customer.raw_blocked.must_equal raw_blocked
+      subject
+      customer.raw_blocked.must_equal Bvr::Customer::BLOCKED_VALUES[false]
+    end
+  end
+
   describe '#calls(options={})' do
     include FaradayStub
+
     let(:h) do
       ::XmlSimple.xml_in File.read(File.join(File.dirname(__FILE__), '/..', '/..', '/fixtures/getuserinfo.xml')), {ForceArray: false}
     end
