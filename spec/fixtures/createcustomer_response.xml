@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<!DOCTYPE CreateAccount>
+<CreateAccount>
+  <Customer>foo</Customer>
+  <Result>Failed</Result>
+  <Reason>Request completely or partially failed.</Reason>
+</CreateAccount>

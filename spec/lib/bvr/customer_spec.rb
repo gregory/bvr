@@ -2,6 +2,25 @@ require_relative "../../spec_helper"
 require_relative "../../helpers/faraday_stub"
 
 describe Bvr::Customer do
+  describe '.create(options)' do
+    include FaradayStub
+
+    let(:options) { { customer: 'foo', customerpassword: 'bar' } }
+    let(:response) do
+      File.read(File.join(File.dirname(__FILE__), '/..', '/..', '/fixtures/createcustomer_response.xml'))
+    end
+
+    subject{ Bvr::Customer.create(options) }
+
+    before do
+      faraday_adapter.get(Bvr::Connection.uri_from_h(options)) { [200, {}, response] }
+    end
+
+    it 'returns the response' do
+      subject['Result'].must_be_instance_of String
+    end
+  end
+
   describe '.find(id)' do
     include FaradayStub
 
