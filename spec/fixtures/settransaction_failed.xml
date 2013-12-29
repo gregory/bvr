@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<!DOCTYPE Transaction>
+<Transaction>
+  <Result>Failed</Result>
+  <Reason>Invalid format: Amount </Reason>
+</Transaction>

@@ -88,7 +88,7 @@ module Bvr
         customer.id      = h["Customer"]
         customer.email   = h["EmailAddress"]
         customer.raw_blocked = h["Blocked"]
-        customer.credit  = Bvr::Credit.new(h["SpecificBalance"], h["Balance"])
+        customer.credit  = Bvr::Credit.new(h["SpecificBalance"], h["Balance"], customer)
       end
     end
 

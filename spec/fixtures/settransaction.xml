@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!DOCTYPE Transaction>
+<Transaction>
+  <Customer>foo</Customer>
+  <Amount>1</Amount>
+  <DateTime>2013-12-29 01:22:28 (UTC)</DateTime>
+  <Result>Success</Result>
+</Transaction>
