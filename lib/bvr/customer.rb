@@ -97,6 +97,10 @@ module Bvr
       end
     end
 
+    def balance
+      self.credit.balance
+    end
+
     def blocked?
       self.raw_blocked == BLOCKED_VALUES[true]
     end
