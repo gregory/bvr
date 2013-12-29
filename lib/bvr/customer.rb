@@ -27,7 +27,12 @@ module Bvr
       ]
     }
 
-    attr_accessor :id, :email, :raw_blocked, :credit, :password
+    attr_accessor :id, :email, :raw_blocked, :credit, :password, :phones
+
+    def initialize(id)
+      @id = id
+      @phones = Bvr::PhoneCollection.new(id)
+    end
 
     def self.authenticate(id, password)
       params = {
@@ -84,11 +89,11 @@ module Bvr
     end
 
     def self.new_from_response(h)
-      self.new.tap do |customer|
-        customer.id      = h["Customer"]
+      self.new(h["Customer"]).tap do |customer|
         customer.email   = h["EmailAddress"]
         customer.raw_blocked = h["Blocked"]
         customer.credit  = Bvr::Credit.new(h["SpecificBalance"], h["Balance"], customer)
+        h['GeocallCLI'].each{ |number| customer.phones << Bvr::Phone.new(number)}
       end
     end
 

@@ -166,13 +166,17 @@ describe Bvr::Customer do
 
     it 'returns a new Bvr::Customer with the right params' do
       subject.must_be_instance_of Bvr::Customer
-      subject.id.must_equal 'John*Doe'
+      subject.id.must_equal 'foo*provider'
       subject.email.must_equal 'JohnDoe@gmail.com'
       subject.raw_blocked.must_equal 'False'
 
       subject.credit.must_be_instance_of Bvr::Credit
       subject.credit.raw_balance.must_equal '1.86'
       subject.credit.raw_specific_balance.must_equal '1.86828'
+
+      subject.phones.must_be_instance_of Array
+      subject.phones.must_include Bvr::Phone.new('+4412345678')
+      subject.phones.must_include Bvr::Phone.new('+4412345679')
     end
   end
 
@@ -180,14 +184,14 @@ describe Bvr::Customer do
     subject { customer.blocked? }
 
     describe 'when raw_blocked is false' do
-      let(:customer) { Bvr::Customer.new.tap{ |c| c.raw_blocked = 'False' } }
+      let(:customer) { Bvr::Customer.new('foo').tap{ |c| c.raw_blocked = 'False' } }
       it 'returns true' do
         subject.must_equal false
       end
     end
 
     describe 'when raw_blocked is true' do
-      let(:customer) { Bvr::Customer.new.tap{ |c| c.raw_blocked = 'True' } }
+      let(:customer) { Bvr::Customer.new('foo').tap{ |c| c.raw_blocked = 'True' } }
       it 'returns true' do
         subject.must_equal true
       end
@@ -199,7 +203,7 @@ describe Bvr::Customer do
 
     let(:customer_id) { 'foo' }
     let(:raw_blocked) { 'bar' }
-    let(:customer) { Bvr::Customer.new.tap{ |c| c.id = customer_id; c.raw_blocked = raw_blocked } }
+    let(:customer) { Bvr::Customer.new(customer_id).tap{ |c| c.raw_blocked = raw_blocked } }
     let(:block) { true }
     let(:options) do
       {
@@ -231,7 +235,7 @@ describe Bvr::Customer do
     let(:customer_id) { 'foo' }
     let(:old_password) { 'bar' }
     let(:new_password) { 'barbar' }
-    let(:customer) { Bvr::Customer.new.tap{ |c| c.id = customer_id; c.password = old_password } }
+    let(:customer) { Bvr::Customer.new(customer_id).tap{ |c| c.password = old_password } }
     let(:options) do
       {
         command: Bvr::Customer::API_COMMANDS[:changepassword],
@@ -263,7 +267,7 @@ describe Bvr::Customer do
 
     let(:customer_id) { 'foo' }
     let(:raw_blocked) { 'bar' }
-    let(:customer) { Bvr::Customer.new.tap{ |c| c.id = customer_id; c.raw_blocked = raw_blocked } }
+    let(:customer) { Bvr::Customer.new(customer_id).tap{ |c| c.raw_blocked = raw_blocked } }
     let(:block) { false }
     let(:options) do
       {

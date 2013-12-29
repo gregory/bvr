@@ -1,9 +1,11 @@
 <?xml version="1.0"?>
 <!DOCTYPE GetUserInfo>
 <GetUserInfo>
-  <Customer>John*Doe</Customer>
+  <Customer>foo*provider</Customer>
   <Balance>1.86</Balance>
   <SpecificBalance>1.86828</SpecificBalance>
   <Blocked>False</Blocked>
   <EmailAddress>JohnDoe@gmail.com</EmailAddress>
+  <GeocallCLI>+4412345678</GeocallCLI>
+  <GeocallCLI>+4412345679</GeocallCLI>
 </GetUserInfo>

@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<!DOCTYPE ChangeUserInfo>
+<ChangeUserInfo>
+  <Customer>foo*provider</Customer>
+  <Result>Success</Result>
+  <Reason>GeoCallCLI Changed</Reason>
+  <Result>Success</Result>
+  <Reason>Request completely succeeded</Reason>
+</ChangeUserInfo>
