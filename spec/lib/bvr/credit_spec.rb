@@ -34,7 +34,7 @@ describe Bvr::Credit do
     let(:raw_specific_balance) { 10.12345 }
     let(:raw_balance) { 10.12 }
     let(:amount) { 1 }
-    let(:customer) { Bvr::Customer.new }
+    let(:customer) { Bvr::Customer.new(customer_id) }
     let(:credit)   { Bvr::Credit.new(raw_specific_balance, raw_balance, customer) }
     let(:customer_id) { 'foo' }
     let(:options) do
@@ -106,7 +106,7 @@ describe Bvr::Credit do
     let(:raw_specific_balance) { 10.12345 }
     let(:raw_balance) { 10.12 }
     let(:amount) { 1 }
-    let(:customer) { Bvr::Customer.new }
+    let(:customer) { Bvr::Customer.new(customer_id) }
     let(:credit)   { Bvr::Credit.new(raw_specific_balance, raw_balance, customer) }
     let(:customer_id) { 'foo' }
     let(:options) do
