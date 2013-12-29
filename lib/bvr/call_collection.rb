@@ -1,5 +1,6 @@
 module Bvr
   class CallCollection
+    include Enumerable
     # Valid Options:
     #  Variable  Value Option  Description
     #  command calloverview  Mandatory
@@ -47,6 +48,10 @@ module Bvr
 
     def count
       Integer(self.raw_count)
+    end
+
+    def each(&block)
+      @collection.each{ |em| block.call(em) }
     end
 
     def next?
