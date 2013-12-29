@@ -22,6 +22,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake", "~> 10.1.1"
   spec.add_development_dependency 'rack', "~> 1.5.2"
   spec.add_development_dependency "faraday", "~> 0.8.8"
-  spec.add_development_dependency "happymapper", "~> 0.4.0"
   spec.add_development_dependency "xml-simple", "~> 1.1.3"
 end
