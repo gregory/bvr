@@ -1,4 +1,3 @@
-require 'happymapper'
 Dir[File.dirname(__FILE__) + '/bvr/*.rb'].each{ |file| require file }
 
 module Bvr
