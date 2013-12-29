@@ -2,6 +2,34 @@ require_relative "../../spec_helper"
 require_relative "../../helpers/faraday_stub"
 
 describe Bvr::Customer do
+
+  describe '.authenticate(id, password)' do
+    include FaradayStub
+
+    let(:customer_id) { 'foo' }
+    let(:password)    { 'bar' }
+    let(:options) do
+      {
+        command: Bvr::Customer::API_COMMANDS[:authenticate],
+        customer: customer_id,
+        customerpassword: password
+      }
+    end
+    let(:response) do
+      File.read(File.join(File.dirname(__FILE__), '/..', '/..', '/fixtures/validateuser.xml'))
+    end
+
+    subject{ Bvr::Customer.authenticate(customer_id, password) }
+
+    before do
+      faraday_adapter.get(Bvr::Connection.uri_from_h(options)) { [200, {}, response] }
+    end
+
+    it 'returns a boolean' do
+      subject.must_equal true
+    end
+  end
+
   describe '.block(id, block=true)' do
     include FaradayStub
 

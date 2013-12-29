@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<!DOCTYPE ValidateUser>
+<ValidateUser>
+  <Customer>foo*provider</Customer>
+  <Result>Success</Result>
+</ValidateUser>

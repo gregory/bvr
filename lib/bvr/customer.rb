@@ -3,7 +3,8 @@ module Bvr
     API_COMMANDS = {
       find: "getuserinfo",
       create: "createcustomer",
-      block: "changeuserinfo"
+      block: "changeuserinfo",
+      authenticate: "validateuser"
     }
 
     BLOCKED_VALUES = {
@@ -26,6 +27,17 @@ module Bvr
     }
 
     attr_accessor :id, :email, :raw_blocked, :credit
+
+    def self.authenticate(id, password)
+      params = {
+        command: API_COMMANDS[:authenticate],
+        customer: id,
+        customerpassword: password
+      }
+
+      response = Bvr.connection.get(params)
+      response['Result'] == 'Success'
+    end
 
     def self.block(id, block=true)
       params = {
