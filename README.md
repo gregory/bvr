@@ -25,23 +25,31 @@ Bvr.configure do |config|
 end
 `
 ### Retreiving All the info and form, and manage a customer
-`
-customer = Bvr::Customer.find('customer_id')
-customer.phones
-customer.phones.add( Bvr::Phone.new('+4412345678') )
-customer.balance
-customer.credit.add(10.20)
-customer.credit.rm(1.20)
-customer.block!
-customer.unblock!
-calls = customer.calls({recordcount: 100})
-calls.count = 250
-calls.size #=> 100
-calls.next? # => true, 150 are left
+`customer = Bvr::Customer.find('customer_id')`
 
-Bvr::Customer.authenticate('customer_id', 'pass')
+`customer.phones`
 
-`
+`customer.phones.add( Bvr::Phone.new('+4412345678') )`
+
+`customer.balance`
+
+`customer.credit.add(10.20)`
+
+`customer.credit.rm(1.20)`
+
+`customer.block!`
+
+`customer.unblock!`
+
+`calls = customer.calls({recordcount: 100})`
+
+`calls.count #=> 250`
+
+`calls.size #=> 100`
+
+`calls.next? # => true, 150 are left`
+
+`Bvr::Customer.authenticate('customer_id', 'pass')`
 
 A lot of class methods are available, just have a look at the specs
 
