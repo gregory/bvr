@@ -174,7 +174,7 @@ describe Bvr::Customer do
       subject.credit.raw_balance.must_equal '1.86'
       subject.credit.raw_specific_balance.must_equal '1.86828'
 
-      subject.phones.must_be_instance_of Array
+      subject.phones.must_be_instance_of Bvr::PhoneCollection
       subject.phones.must_include Bvr::Phone.new('+4412345678')
       subject.phones.must_include Bvr::Phone.new('+4412345679')
     end
