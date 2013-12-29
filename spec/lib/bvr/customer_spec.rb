@@ -68,6 +68,35 @@ describe Bvr::Customer do
     end
   end
 
+  describe '.change_password(id, old_pass, new_pass)' do
+    include FaradayStub
+
+    let(:customer_id) { 'foo' }
+    let(:old_password) { 'bar' }
+    let(:new_password) { 'barbar' }
+    let(:options) do
+      {
+        command: Bvr::Customer::API_COMMANDS[:changepassword],
+        customer: customer_id,
+        oldcustomerpassword: old_password,
+        newcustomerpassword: new_password
+      }
+    end
+    let(:response) do
+      File.read(File.join(File.dirname(__FILE__), '/..', '/..', '/fixtures/changepassword.xml'))
+    end
+
+    before do
+      faraday_adapter.get(Bvr::Connection.uri_from_h(options)) { [200, {}, response] }
+    end
+
+    subject { Bvr::Customer.change_password(customer_id, old_password, new_password) }
+
+    it 'return response' do
+      subject['Result'].must_be_instance_of String
+    end
+  end
+
   describe '.create(options)' do
     include FaradayStub
 

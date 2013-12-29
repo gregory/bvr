@@ -4,7 +4,8 @@ module Bvr
       find: "getuserinfo",
       create: "createcustomer",
       block: "changeuserinfo",
-      authenticate: "validateuser"
+      authenticate: "validateuser",
+      changepassword: 'changepassword'
     }
 
     BLOCKED_VALUES = {
@@ -47,6 +48,17 @@ module Bvr
       }
 
       raise ArgumentError.new('Please provide a boolean') unless !!block == block
+
+      Bvr.connection.get(params)
+    end
+
+    def self.change_password(id, old_password, new_password)
+      params = {
+        command: API_COMMANDS[:changepassword],
+        customer: id,
+        oldcustomerpassword: old_password,
+        newcustomerpassword: new_password
+      }
 
       Bvr.connection.get(params)
     end
