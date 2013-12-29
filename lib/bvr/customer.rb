@@ -27,7 +27,7 @@ module Bvr
       ]
     }
 
-    attr_accessor :id, :email, :raw_blocked, :credit
+    attr_accessor :id, :email, :raw_blocked, :credit, :password
 
     def self.authenticate(id, password)
       params = {
@@ -104,6 +104,13 @@ module Bvr
       end
 
       return response['Result'][0] == 'Success'
+    end
+
+    def change_password(new_password)
+      response = Bvr::Customer.change_password(self.id, self.password, new_password)
+      return false if response['Result'] != 'Success'
+
+      self.password = new_password
     end
 
     def unblock!

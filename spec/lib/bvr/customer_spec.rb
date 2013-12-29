@@ -225,6 +225,39 @@ describe Bvr::Customer do
     end
   end
 
+  describe '#change_password(new_password)' do
+    include FaradayStub
+
+    let(:customer_id) { 'foo' }
+    let(:old_password) { 'bar' }
+    let(:new_password) { 'barbar' }
+    let(:customer) { Bvr::Customer.new.tap{ |c| c.id = customer_id; c.password = old_password } }
+    let(:options) do
+      {
+        command: Bvr::Customer::API_COMMANDS[:changepassword],
+        customer: customer_id,
+        oldcustomerpassword: old_password,
+        newcustomerpassword: new_password
+      }
+    end
+    let(:response) do
+      File.read(File.join(File.dirname(__FILE__), '/..', '/..', '/fixtures/changepassword.xml'))
+    end
+
+    before do
+      faraday_adapter.get(Bvr::Connection.uri_from_h(options)) { [200, {}, response] }
+    end
+
+    subject { customer.change_password(new_password) }
+
+    it 'changes the password of the user' do
+      customer.password.must_equal old_password
+      subject
+      customer.password.must_equal new_password
+    end
+
+  end
+
   describe '#unblock!' do
     include FaradayStub
 
