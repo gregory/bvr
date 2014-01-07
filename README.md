@@ -63,5 +63,5 @@ A lot of class methods are available, just have a look at the specs
 5. Create new Pull Request
 
 
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/gregory/bvr/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+[![Analytics](https://ga-beacon.appspot.com/UA-34823890-2/bvr/readme?pixel)](https://github.com/gregory/bvr)
 
